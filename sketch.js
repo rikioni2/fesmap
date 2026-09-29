@@ -5,15 +5,21 @@ let cam;
 let touchStartX = 0;
 let touchStartY = 0;
 
-// ★ 選択中のピンのIDを保持する変数
+// 選択中のピンのIDを保持する変数
 let selectedSpotId = null;
 
 const spots = [
   { id: 1, shapeType: "sphere", name: "防災ブース・転倒防止ブース", desc: "●1F 剣道場 【防災段ボール迷路】\n 迷路内の防災クイズを解いて楽しく遊びながら学ぼう！\n●2F 柔道場 【転び方体験教室】\n 柔道指導員(卒業生)による上手な転び方と転ばない為の体験会", pos: [-20, -10, -6], color: [255, 71, 87] },
-  { id: 2, shapeType: "sphere", name: "体育館ステージ", desc: "吹奏楽部、ダンス部、Jコーラス部のステージ\nサンバ、コスプレ、卒業生、教員、高校生有志\n魅力的なステージが盛りだくさん", pos: [5, -15, -4], color: [46, 213, 115] },
+  
+  // ★ 体育館ステージにリンクを追加
+  { id: 2, shapeType: "sphere", name: "体育館ステージ", desc: "吹奏楽部、ダンス部、Jコーラス部のステージ\nサンバ、コスプレ、卒業生、教員、高校生有志\n魅力的なステージが盛りだくさん\n\n🔗 <a href='https://taishifes25.my.canva.site/fes-26/page-2' target='_blank' rel='noopener noreferrer' style='color: #0984e3; font-weight: bold; text-decoration: none;'>出演者情報はこちら</a>", pos: [5, -15, -4], color: [46, 213, 115] },
+  
   { id: 3, shapeType: "sphere", name: "医療体験・縁日・英語体験ブース", desc: "●講義室1 【Enjoy縁日！】【英語体験ブース】\n こどもが楽しめる射的や輪投げなど遊びがたくさん。太子高校生と一緒に楽しく英語を学ぼう！\n●講義室2,3 【医療体験ブース】\n 社会医療法人三栄会ツカザキ病院さんによる様々な体験を実施予定！", pos: [-42, -12, -8], color: [30, 144, 255] },
   { id: 4, shapeType: "sphere", name: "茶道部・調理手芸部・総合実践", desc: "お茶席、お菓子販売、地元企業コラボ商品販売", pos: [-35, 10, -6], color: [255, 159, 26] },
-  { id: 5, shapeType: "cone", name: "一般受付・パンフ配布", desc: "ご来場時にお越しください。パンフレットのお渡しします。", pos: [-55, -3, -5], color: [155, 89, 182] },
+  
+  // ★ 一般受付にリンクを追加
+  { id: 5, shapeType: "cone", name: "一般受付・パンフ配布", desc: "ご来場時にお越しください。パンフレットのお渡しします。\n\n🔗 <a href='https://taishifes25.my.canva.site/fes-26' target='_blank' rel='noopener noreferrer' style='color: #0984e3; font-weight: bold; text-decoration: none;'>太子フェス特設ページ</a>", pos: [-55, -3, -5], color: [155, 89, 182] },
+  
   { id: 6, shapeType: "cone", name: "キッチンカー広場", desc: "トルティーヤ、カレー、ケバブ、アサイー、チヂミ、バナナケーキなど、地域で活躍中のお店が集結！", pos: [-7, 3, -5], color: [230, 126, 34] },
   { id: 7, shapeType: "cone", name: "駐輪場", desc: "自転車・バイクでお越しの方はこちらをご利用ください。", pos: [-60, 20, -5], color: [52, 73, 94] },
 
@@ -78,10 +84,8 @@ function drawSpots() {
 
     // 選択中のピンを点滅（脈動＋発光）させる
     if (spot.id === selectedSpotId) {
-      // 大きさを 1.0倍 〜 1.4倍 の間でフワフワ変える
       let pulse = map(sin(frameCount * 8), -1, 1, 1.0, 1.4);
       scale(pulse); 
-      // ピンを自ら発光させる
       emissiveMaterial(60, 60, 60); 
     } else {
       emissiveMaterial(0, 0, 0);
@@ -159,7 +163,6 @@ function checkSpotClick(clickX, clickY) {
   }
 
   if (bestSpot) {
-    // 選択されたピンのIDを記録する
     selectedSpotId = bestSpot.id;
     showCard(bestSpot.name, bestSpot.desc);
   }
@@ -190,12 +193,14 @@ function mouseClicked() {
 
 function showCard(title, desc) {
   document.getElementById('card-title').innerText = title;
-  document.getElementById('card-desc').innerText = desc;
+  
+  // ★ innerText から innerHTML に変更（HTMLタグを解釈させるため）
+  document.getElementById('card-desc').innerHTML = desc;
+  
   document.getElementById('info-card').classList.add('active');
 }
 
 function closeCard() {
-  // カードを閉じた時に、ピンの選択状態を解除して元の表示に戻す
   selectedSpotId = null; 
   document.getElementById('info-card').classList.remove('active');
 }
