@@ -5,10 +5,13 @@ let cam;
 let touchStartX = 0;
 let touchStartY = 0;
 
+// ★ 選択中のピンのIDを保持する変数
+let selectedSpotId = null;
+
 const spots = [
-  { id: 1, shapeType: "sphere", name: "防災ブース・転倒防止ブース", desc: "●1F 剣道場　【防災段ボール迷路】\n　迷路内の防災クイズを解いて楽しく遊びながら学ぼう！\n●2F 柔道場　【転び方体験教室】\n　柔道指導員(卒業生)による上手な転び方と転ばない為の体験会", pos: [-20, -10, -6], color: [255, 71, 87] },
+  { id: 1, shapeType: "sphere", name: "防災ブース・転倒防止ブース", desc: "●1F 剣道場 【防災段ボール迷路】\n 迷路内の防災クイズを解いて楽しく遊びながら学ぼう！\n●2F 柔道場 【転び方体験教室】\n 柔道指導員(卒業生)による上手な転び方と転ばない為の体験会", pos: [-20, -10, -6], color: [255, 71, 87] },
   { id: 2, shapeType: "sphere", name: "体育館ステージ", desc: "吹奏楽部、ダンス部、Jコーラス部のステージ\nサンバ、コスプレ、卒業生、教員、高校生有志\n魅力的なステージが盛りだくさん", pos: [5, -15, -4], color: [46, 213, 115] },
-  { id: 3, shapeType: "sphere", name: "医療体験・縁日・英語体験ブース", desc: "●講義室1　【Enjoy縁日！】【英語体験ブース】\n　こどもが楽しめる射的や輪投げなど遊びがたくさん。太子高校生と一緒に楽しく英語を学ぼう！\n●講義室2,3 【医療体験ブース】\n　社会医療法人三栄会ツカザキ病院さんによる様々な体験を実施予定！", pos: [-42, -12, -8], color: [30, 144, 255] },
+  { id: 3, shapeType: "sphere", name: "医療体験・縁日・英語体験ブース", desc: "●講義室1 【Enjoy縁日！】【英語体験ブース】\n こどもが楽しめる射的や輪投げなど遊びがたくさん。太子高校生と一緒に楽しく英語を学ぼう！\n●講義室2,3 【医療体験ブース】\n 社会医療法人三栄会ツカザキ病院さんによる様々な体験を実施予定！", pos: [-42, -12, -8], color: [30, 144, 255] },
   { id: 4, shapeType: "sphere", name: "茶道部・調理手芸部・総合実践", desc: "お茶席、お菓子販売、地元企業コラボ商品販売", pos: [-35, 10, -6], color: [255, 159, 26] },
   { id: 5, shapeType: "cone", name: "一般受付・パンフ配布", desc: "ご来場時にお越しください。パンフレットのお渡しします。", pos: [-55, -3, -5], color: [155, 89, 182] },
   { id: 6, shapeType: "cone", name: "キッチンカー広場", desc: "トルティーヤ、カレー、ケバブ、アサイー、チヂミ、バナナケーキなど、地域で活躍中のお店が集結！", pos: [-7, 3, -5], color: [230, 126, 34] },
@@ -25,10 +28,7 @@ function preload() {
 }
 
 function setup() {
-  // 画面全体にフィット
   let canvas = createCanvas(windowWidth, windowHeight, WEBGL);
-  
-  // iOS Safari でのジェスチャー衝突を防止
   canvas.elt.style.touchAction = 'none';
 
   angleMode(DEGREES);
@@ -51,6 +51,8 @@ function draw() {
   rotateY(85);
   rotateX(10);
 
+  // 建物を描画する際は発光（点滅）効果をリセットしておく
+  emissiveMaterial(0, 0, 0);
   fill(230, 230, 230);
   noStroke();
 
@@ -73,6 +75,17 @@ function drawSpots() {
     let screenPos = getScreenPosition(0, 0, 0);
     spot.sx = screenPos.x;
     spot.sy = screenPos.y;
+
+    // 選択中のピンを点滅（脈動＋発光）させる
+    if (spot.id === selectedSpotId) {
+      // 大きさを 1.0倍 〜 1.4倍 の間でフワフワ変える
+      let pulse = map(sin(frameCount * 8), -1, 1, 1.0, 1.4);
+      scale(pulse); 
+      // ピンを自ら発光させる
+      emissiveMaterial(60, 60, 60); 
+    } else {
+      emissiveMaterial(0, 0, 0);
+    }
 
     fill(spot.color[0], spot.color[1], spot.color[2]);
     noStroke();
@@ -130,13 +143,10 @@ function getScreenPosition(x, y, z) {
   return { x: sx, y: sy };
 }
 
-// ピンのタップ判定
 function checkSpotClick(clickX, clickY) {
-  // 右上ボタンの範囲はタップを無効化
   if (clickY < 75 && clickX > width - 170) return;
 
   let bestSpot = null;
-  // スマホの指操作に合わせて少し広め(65px)に判定
   let minDistance = 65;
 
   for (let spot of spots) {
@@ -149,13 +159,12 @@ function checkSpotClick(clickX, clickY) {
   }
 
   if (bestSpot) {
+    // 選択されたピンのIDを記録する
+    selectedSpotId = bestSpot.id;
     showCard(bestSpot.name, bestSpot.desc);
   }
 }
 
-// --- 【スマホ・PC完全対応のタップ判定ロジック】 ---
-
-// 指を置いた位置を記録
 function touchStarted() {
   if (touches.length > 0) {
     touchStartX = touches[0].x;
@@ -163,21 +172,17 @@ function touchStarted() {
   }
 }
 
-// 指を離したときに判定（スワイプ回転中はタップと見なさない）
 function touchEnded() {
   let endX = (touches.length > 0) ? touches[0].x : mouseX;
   let endY = (touches.length > 0) ? touches[0].y : mouseY;
   
-  // 移動量が15px未満（＝純粋なタップ）の場合のみ実行
   let moveDist = dist(touchStartX, touchStartY, endX, endY);
   if (moveDist < 15) {
     checkSpotClick(endX, endY);
   }
 }
 
-// PCマウス用クリック
 function mouseClicked() {
-  // タッチデバイス以外（マウス操作）の場合のみ発火
   if (!('ontouchstart' in window)) {
     checkSpotClick(mouseX, mouseY);
   }
@@ -190,6 +195,8 @@ function showCard(title, desc) {
 }
 
 function closeCard() {
+  // カードを閉じた時に、ピンの選択状態を解除して元の表示に戻す
+  selectedSpotId = null; 
   document.getElementById('info-card').classList.remove('active');
 }
 
@@ -198,7 +205,6 @@ function resetView() {
   closeCard();
 }
 
-// 端末の向きが変わったりリサイズされた時に再フィット
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 }
