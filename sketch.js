@@ -12,8 +12,7 @@ const spots = [
   { id: 3, shapeType: "sphere", name: "医療体験・縁日・英語体験ブース", desc: "●講義室1 【Enjoy縁日！】【英語体験ブース】\n こどもが楽しめる射的や輪投げなど遊びがたくさん。太子高校生と一緒に楽しく英語を学ぼう！\n●講義室2,3 【医療体験ブース】\n 社会医療法人三栄会ツカザキ病院さんによる様々な体験を実施予定！", pos: [-42, -12, -8], color: [30, 144, 255] },
   { id: 4, shapeType: "sphere", name: "茶道部・調理手芸部・総合実践", desc: "お茶席、お菓子販売、地元企業コラボ商品販売", pos: [-35, 10, -6], color: [255, 159, 26] },
   
-  // 一般受付・パンフ配布（キャラクターピン）
-  { id: 5, shapeType: "character", name: "一般受付・パンフ配布", desc: "ご来場時にお越しください。パンフレットのお渡しします。\n\n🔗 <a href='https://taishifes25.my.canva.site/fes-26' target='_blank' rel='noopener noreferrer' style='color: #0984e3; font-weight: bold; text-decoration: none;'>太子フェス特設ページ</a>", pos: [-55, -3, -5], color: [155, 89, 182] },
+  { id: 5, shapeType: "cone", name: "一般受付・パンフ配布", desc: "ご来場時にお越しください。パンフレットのお渡しします。\n\n🔗 <a href='https://taishifes25.my.canva.site/fes-26' target='_blank' rel='noopener noreferrer' style='color: #0984e3; font-weight: bold; text-decoration: none;'>太子フェス特設ページ</a>", pos: [-55, -3, -5], color: [155, 89, 182] },
   
   { id: 6, shapeType: "cone", name: "キッチンカー広場", desc: "トルティーヤ、カレー、ケバブ、アサイー、チヂミ、バナナケーキなど、地域で活躍中のお店が集結！", pos: [-7, 3, -5], color: [230, 126, 34] },
   { id: 7, shapeType: "cone", name: "駐輪場", desc: "自転車・バイクでお越しの方はこちらをご利用ください。", pos: [-60, 20, -5], color: [52, 73, 94] },
@@ -21,13 +20,16 @@ const spots = [
   // --- 【細い針ピン（トイレ 3個）】 ---
   { id: 8, shapeType: "pin", name: "トイレ①（校舎1F）", desc: "校舎1階 本館東側のトイレです。", pos: [-10, 15, -13], color: [0, 168, 255] },
   { id: 9, shapeType: "pin", name: "トイレ②（講義棟）", desc: "講義棟内のトイレです。", pos: [-35, -10, -13], color: [0, 168, 255] },
-  { id: 10, shapeType: "pin", name: "トイレ③（体育館付近）", desc: "武道場裏のトイレです。", pos: [-15, -20, -13], color: [0, 168, 255] }
+  { id: 10, shapeType: "pin", name: "トイレ③（体育館付近）", desc: "武道場裏のトイレです。", pos: [-15, -20, -13], color: [0, 168, 255] },
+  
+  // キャラクター独立ピン（受付の近くに配置）
+  { id: 11, shapeType: "character", name: "太子FES'25 公式キャラクター", desc: "太子フェスへようこそ！\n一緒に盛り上がりましょう！", pos: [-45, -5, -4], color: [255, 255, 255] }
 ];
 
 function preload() {
   buildingModel = loadModel('school.obj', true);
   
-  // ★重要：もしGitHubにアップロードしたファイルがJPGなら、ここを 'cat.jpg' に変更してください
+  // ★ cat.png に戻しました
   catImg = loadImage('cat.png');
 }
 
@@ -121,7 +123,8 @@ function drawSpots() {
       translate(0, 7, 0); 
       rotateY(-45);
 
-      // ★修正：白飛びの原因だった emissiveMaterial と fill を削除し、純粋に画像を貼る
+      // 画像本来の色を出すためのマテリアル設定
+      ambientMaterial(255);
       texture(catImg);
       noStroke();
       
