@@ -23,7 +23,7 @@ const spots = [
   { id: 10, shapeType: "pin", name: "トイレ③（体育館付近）", desc: "武道場裏のトイレです。", pos: [-15, -20, -13], color: [0, 168, 255] },
   
   // ★ キャラクター独立ピンの位置を [-75, -2, -3] に変更しました
-  { id: 11, shapeType: "character", name: "太子FES'25 公式キャラクター", desc: "太子フェスへようこそ！\n一緒に盛り上がりましょう！", pos: [-75, -2, -18], color: [255, 255, 255] }
+  { id: 11, shapeType: "character", name: "太子FES'25 公式キャラクター", desc: "太子フェスへようこそ！\n一緒に盛り上がりましょう！", pos: [-75, 0, -18], color: [255, 255, 255] }
 ];
 
 function preload() {
