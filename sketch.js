@@ -1,9 +1,7 @@
 let buildingModel;
 let cam;
 
-// ★ 画像を格納する変数を追加
 let catImg;
-
 let touchStartX = 0;
 let touchStartY = 0;
 let selectedSpotId = null;
@@ -14,7 +12,7 @@ const spots = [
   { id: 3, shapeType: "sphere", name: "医療体験・縁日・英語体験ブース", desc: "●講義室1 【Enjoy縁日！】【英語体験ブース】\n こどもが楽しめる射的や輪投げなど遊びがたくさん。太子高校生と一緒に楽しく英語を学ぼう！\n●講義室2,3 【医療体験ブース】\n 社会医療法人三栄会ツカザキ病院さんによる様々な体験を実施予定！", pos: [-42, -12, -8], color: [30, 144, 255] },
   { id: 4, shapeType: "sphere", name: "茶道部・調理手芸部・総合実践", desc: "お茶席、お菓子販売、地元企業コラボ商品販売", pos: [-35, 10, -6], color: [255, 159, 26] },
   
-  // ★ ここの shapeType を "character" に変更しました
+  // 一般受付・パンフ配布（キャラクターピン）
   { id: 5, shapeType: "character", name: "一般受付・パンフ配布", desc: "ご来場時にお越しください。パンフレットのお渡しします。\n\n🔗 <a href='https://taishifes25.my.canva.site/fes-26' target='_blank' rel='noopener noreferrer' style='color: #0984e3; font-weight: bold; text-decoration: none;'>太子フェス特設ページ</a>", pos: [-55, -3, -5], color: [155, 89, 182] },
   
   { id: 6, shapeType: "cone", name: "キッチンカー広場", desc: "トルティーヤ、カレー、ケバブ、アサイー、チヂミ、バナナケーキなど、地域で活躍中のお店が集結！", pos: [-7, 3, -5], color: [230, 126, 34] },
@@ -28,7 +26,6 @@ const spots = [
 
 function preload() {
   buildingModel = loadModel('school.obj', true);
-  // ★ キャラクター画像を読み込む
   catImg = loadImage('cat.png');
 }
 
@@ -71,7 +68,6 @@ function drawSpots() {
     push();
     translate(spot.pos[0], spot.pos[1], spot.pos[2]);
 
-    // キャラクターとピン以外を縦揺れさせる
     if (spot.shapeType !== "pin" && spot.shapeType !== "character") {
       let bounce = -abs(sin(frameCount * 3 + spot.id * 50)) * 2;
       translate(0, 0, bounce);
@@ -81,7 +77,6 @@ function drawSpots() {
     spot.sx = screenPos.x;
     spot.sy = screenPos.y;
 
-    // 選択中の点滅（キャラクターの場合は少しだけフワッと大きくする）
     if (spot.id === selectedSpotId) {
       let pulse = map(sin(frameCount * 8), -1, 1, 1.0, 1.3);
       scale(pulse); 
@@ -118,18 +113,24 @@ function drawSpots() {
 
       pop();
     } else if (spot.shapeType === "character") {
-      // ★ キャラクター画像を配置する処理
       push();
-      rotateX(90);       // 画像を立てる
-      scale(-1, 1, 1);   // マップの左右反転設定を相殺して画像が鏡文字にならないようにする
-      translate(0, -5, 0); // 地面から少し浮かせる
+      rotateX(90);
+      scale(-1, 1, 1);
+      
+      // ★修正1：地下に埋まらないように、プラスの値(+7)で地上に持ち上げました
+      translate(0, 7, 0); 
+      
+      // ★修正2：カメラの初期視点から一番綺麗に正面を向くように角度を調整
+      rotateY(-45);
 
-      // 環境光の影を無視して、画像本来の明るい色で表示する
+      // ★修正3：直前のピンの色（紫色）が混ざらないように白を指定してリセット
+      fill(255);
       emissiveMaterial(255, 255, 255);
       texture(catImg);
       
-      // 画像を描画する板のサイズ（縦横の比率に合わせて数値を変更可能です）
-      plane(8, 8);
+      // 少し大きめに表示 (幅, 高さ)
+      plane(14, 14);
+      
       pop();
     } else {
       sphere(2.5);
