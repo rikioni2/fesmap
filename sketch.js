@@ -29,7 +29,7 @@ const spots = [
 function preload() {
   buildingModel = loadModel('school.obj', true);
   
-  // ★ cat.png に戻しました
+  // ファイル名はご指定の通り cat.png にしています
   catImg = loadImage('cat.png');
 }
 
@@ -120,16 +120,17 @@ function drawSpots() {
       push();
       rotateX(90);
       scale(-1, 1, 1);
-      translate(0, 7, 0); 
+      translate(0, 8, 0); 
       rotateY(-45);
 
-      // 画像本来の色を出すためのマテリアル設定
-      ambientMaterial(255);
+      // ★ 影や光の影響を完全に無効化し、画像本来の色と明るさで表示する魔法の設定
+      noLights();
+      fill(255);
       texture(catImg);
       noStroke();
       
       // 画像のサイズ (幅, 高さ)
-      plane(14, 14);
+      plane(16, 16);
       
       pop();
     } else {
