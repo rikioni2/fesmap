@@ -22,8 +22,8 @@ const spots = [
   { id: 9, shapeType: "pin", name: "トイレ②（講義棟）", desc: "講義棟内のトイレです。", pos: [-35, -10, -13], color: [0, 168, 255] },
   { id: 10, shapeType: "pin", name: "トイレ③（体育館付近）", desc: "武道場裏のトイレです。", pos: [-15, -20, -13], color: [0, 168, 255] },
   
-  // ★ キャラクター独立ピンの位置を [-75, -2, -3] に変更しました
-  { id: 11, shapeType: "character", name: "太子FES'25 公式キャラクター", desc: "太子フェスへようこそ！\n一緒に盛り上がりましょう！", pos: [-80, 0, -18], color: [255, 255, 255] }
+  // ★ ご自身の修正を反映しました
+  { id: 11, shapeType: "character", name: "太子FES 公式キャラクター", desc: "太子フェスへようこそ！\n一緒に盛り上がりましょう！", pos: [-80, 0, -18], color: [255, 255, 255] }
 ];
 
 function preload() {
@@ -119,7 +119,10 @@ function drawSpots() {
       rotateX(90);
       scale(-1, 1, 1);
       translate(0, 8, 0); 
-      rotateY(-45);
+      
+      // ★★★【角度の調整はここ！】★★★
+      // -45 になっているので、0にしたり、他の数値にしてお好みの角度に変えてください。
+      rotateY(-45); 
 
       rotateZ(180);
 
