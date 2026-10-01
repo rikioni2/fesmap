@@ -22,8 +22,8 @@ const spots = [
   { id: 9, shapeType: "pin", name: "トイレ②（講義棟）", desc: "講義棟内のトイレです。", pos: [-35, -10, -13], color: [0, 168, 255] },
   { id: 10, shapeType: "pin", name: "トイレ③（体育館付近）", desc: "武道場裏のトイレです。", pos: [-15, -20, -13], color: [0, 168, 255] },
   
-  // キャラクター独立ピン（受付の近くに配置）
-  { id: 11, shapeType: "character", name: "太子FES'25 公式キャラクター", desc: "太子フェスへようこそ！\n一緒に盛り上がりましょう！", pos: [-45, -5, -4], color: [255, 255, 255] }
+  // ★ キャラクター独立ピンの位置を [-75, -2, -3] に変更しました
+  { id: 11, shapeType: "character", name: "太子FES'25 公式キャラクター", desc: "太子フェスへようこそ！\n一緒に盛り上がりましょう！", pos: [-75, -2, -3], color: [255, 255, 255] }
 ];
 
 function preload() {
@@ -121,7 +121,6 @@ function drawSpots() {
       translate(0, 8, 0); 
       rotateY(-45);
 
-      // ★ 修正：画像をくるっと180度回転させて、天地と左右の反転を同時に直す
       rotateZ(180);
 
       noLights();
@@ -129,7 +128,6 @@ function drawSpots() {
       texture(catImg);
       noStroke();
       
-      // 画像のサイズ (幅, 高さ)
       plane(16, 16);
       
       pop();
