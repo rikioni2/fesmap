@@ -26,6 +26,8 @@ const spots = [
 
 function preload() {
   buildingModel = loadModel('school.obj', true);
+  
+  // ★重要：もしGitHubにアップロードしたファイルがJPGなら、ここを 'cat.jpg' に変更してください
   catImg = loadImage('cat.png');
 }
 
@@ -116,19 +118,14 @@ function drawSpots() {
       push();
       rotateX(90);
       scale(-1, 1, 1);
-      
-      // ★修正1：地下に埋まらないように、プラスの値(+7)で地上に持ち上げました
       translate(0, 7, 0); 
-      
-      // ★修正2：カメラの初期視点から一番綺麗に正面を向くように角度を調整
       rotateY(-45);
 
-      // ★修正3：直前のピンの色（紫色）が混ざらないように白を指定してリセット
-      fill(255);
-      emissiveMaterial(255, 255, 255);
+      // ★修正：白飛びの原因だった emissiveMaterial と fill を削除し、純粋に画像を貼る
       texture(catImg);
+      noStroke();
       
-      // 少し大きめに表示 (幅, 高さ)
+      // 画像のサイズ (幅, 高さ)
       plane(14, 14);
       
       pop();
