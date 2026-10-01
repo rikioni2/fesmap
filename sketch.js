@@ -121,8 +121,8 @@ function drawSpots() {
       translate(0, 8, 0); 
       rotateY(-45);
 
-      // ★ 修正：ここで天地（Y軸）をひっくり返して画像を正位置に戻す
-      scale(1, -1, 1);
+      // ★ 修正：画像をくるっと180度回転させて、天地と左右の反転を同時に直す
+      rotateZ(180);
 
       noLights();
       fill(255);
