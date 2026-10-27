@@ -9,8 +9,8 @@ let selectedSpotId = null;
 const spots = [
   { id: 1, shapeType: "sphere", name: "防災ブース・転倒防止ブース", desc: "●1F 剣道場 【防災段ボール迷路】\n 迷路内の防災クイズを解いて楽しく遊びながら学ぼう！\n●2F 柔道場 【転び方体験教室】\n 柔道指導員(卒業生)による上手な転び方と転ばない為の体験会", pos: [-20, -10, -6], color: [255, 71, 87] },
   { id: 2, shapeType: "sphere", name: "体育館ステージ", desc: "吹奏楽部、ダンス部、Jコーラス部のステージ\nサンバ、コスプレ、卒業生、教員、高校生有志\n魅力的なステージが盛りだくさん\n\n🔗 <a href='https://taishifes25.my.canva.site/fes-26/page-2' target='_blank' rel='noopener noreferrer' style='color: #0984e3; font-weight: bold; text-decoration: none;'>出演者情報はこちら</a>", pos: [5, -15, -4], color: [46, 213, 115] },
-  { id: 3, shapeType: "sphere", name: "医療体験・縁日・英語体験ブース", desc: "●講義室1 【Enjoy縁日！】【英語体験ブース】\n こどもが楽しめる射的や輪投げなど遊びがたくさん。太子高校生と一緒に楽しく英語を学ぼう！\n●講義室2,3 【医療体験ブース】\n 社会医療法人三栄会ツカザキ病院さんによる様々な体験を実施予定！", pos: [-42, -12, -8], color: [30, 144, 255] },
-  { id: 4, shapeType: "sphere", name: "茶道部・調理手芸部・総合実践", desc: "お茶席、お菓子販売、地元企業コラボ商品販売", pos: [-35, 10, -6], color: [255, 159, 26] },
+  { id: 3, shapeType: "sphere", name: "医療体験・縁日・英語体験ブース", desc: "●講義室1 【Enjoy縁日！】【SDGsQuest】\n こどもが楽しめる射的や海外の遊びがたくさん。太子高校生と一緒にゲームをしながら楽しくSDGsを学ぼう！\n●講義室2,3 【医療体験ブース】\n 社会医療法人三栄会ツカザキ病院さんによる様々な体験を実施予定！", pos: [-42, -12, -8], color: [30, 144, 255] },
+  { id: 4, shapeType: "sphere", name: "茶道部・調理手芸部・総合実践", desc: "茶華道部によるお茶席、調理手芸部によるお菓子販売とオーナメント作り体験、総合実践選択者による地元企業コラボ商品販売、", pos: [-35, 10, -6], color: [255, 159, 26] },
   
   { id: 5, shapeType: "cone", name: "総合受付・パンフ配布", desc: "ご来場時にお越しください。\nパンフレットをGETしたら早速「食べて」「見て」「聞いて」わくわく体験を楽しんでください。\n詳細は以下のサイトから\n\n🔗 <a href='https://taishifes25.my.canva.site/fes-26' target='_blank' rel='noopener noreferrer' style='color: #0984e3; font-weight: bold; text-decoration: none;'>太子フェス特設ページ</a>", pos: [-55, -3, -5], color: [155, 89, 182] },
   
@@ -23,7 +23,7 @@ const spots = [
   { id: 10, shapeType: "pin", name: "トイレ③（体育館付近）", desc: "武道場裏のトイレです。", pos: [-15, -20, -13], color: [0, 168, 255] },
   
   // ★ ご自身の修正を反映しました
-  { id: 11, shapeType: "character", name: "校門 ここからスタート", desc: "太子フェスへようこそ！\nまずは総合受付でパンフレットをGET！\n11:00から15:30まで開催", pos: [-80, 0, -18], color: [255, 255, 255] }
+  { id: 11, shapeType: "character", name: "校門 ここからスタート", desc: "太子フェスへようこそ！\nまずは総合受付でパンフレットをGET！\n11:00から15:30まで開催。15:00体育館でのエンディングまでぜひ参加してくださいね♪", pos: [-80, 0, -18], color: [255, 255, 255] }
 ];
 
 function preload() {
