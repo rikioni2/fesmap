@@ -8,7 +8,7 @@ let selectedSpotId = null;
 
 const spots = [
   { id: 1, shapeType: "sphere", name: "防災ブース・転倒防止ブース", desc: "●1F 剣道場 【防災段ボール迷路】\n 迷路内の防災クイズを解いて楽しく遊びながら学ぼう！\n●2F 柔道場 【転び方体験教室】\n 柔道指導員(卒業生)による上手な転び方と転ばない為の体験会", pos: [-20, -10, -6], color: [255, 71, 87] },
-  { id: 2, shapeType: "sphere", name: "体育館ステージ", desc: "吹奏楽部、ダンス部、Jコーラス部のステージ\nサンバ、コスプレ、卒業生、教員、高校生有志\n魅力的なステージが盛りだくさん\n\n🔗 <a href='https://taishifes25.my.canva.site/fes-26/page-2' target='_blank' rel='noopener noreferrer' style='color: #0984e3; font-weight: bold; text-decoration: none;'>出演者情報はこちら</a>", pos: [5, -15, -4], color: [46, 213, 115] },
+  { id: 2, shapeType: "sphere", name: "体育館ステージ", desc: "吹奏楽部、ダンス部、Jコーラス部のステージ\nサンバ、コスプレ、卒業生、教員、高校生有志\n魅力的なステージが盛りだくさん\n15:00エンディングまでみんなで歌って踊って楽しみましょう♪\n\n🔗 <a href='https://taishifes25.my.canva.site/fes-26/page-2' target='_blank' rel='noopener noreferrer' style='color: #0984e3; font-weight: bold; text-decoration: none;'>出演者情報はこちら</a>", pos: [5, -15, -4], color: [46, 213, 115] },
   { id: 3, shapeType: "sphere", name: "医療体験・縁日・英語体験ブース", desc: "●講義室1 【Enjoy縁日！】【SDGsQuest】\n こどもが楽しめる射的や海外の遊びがたくさん。太子高校生と一緒にゲームをしながら楽しくSDGsを学ぼう！\n●講義室2,3 【医療体験ブース】\n 社会医療法人三栄会ツカザキ病院さんによる様々な体験を実施予定！", pos: [-42, -12, -8], color: [30, 144, 255] },
   { id: 4, shapeType: "sphere", name: "茶道部・調理手芸部・総合実践", desc: "茶華道部によるお茶席、調理手芸部によるお菓子販売とオーナメント作り体験、総合実践選択者による地元企業コラボ商品販売、", pos: [-35, 10, -6], color: [255, 159, 26] },
   
